@@ -57,3 +57,23 @@ Lower counts may indicate:
 - Less trending content at that moment
 
 This data can be used to identify emerging trends, track game popularity over time, and support content or business decisions.
+
+
+## Game Library
+
+I created a separate file called `game_library.py` that stores a list of known game titles. This acts as a reference dataset for the script.
+
+Instead of relying on external APIs (like Steam, which was inconsistent), I used my own controlled list of games so the matching would be more reliable.
+
+In the script:
+- The game library is imported and cleaned (lowercased, punctuation removed)
+- YouTube video titles are cleaned the same way
+- The script checks if a game name appears inside each title
+- If it does, it counts that as a match
+
+This is how the script turns messy YouTube titles into structured data showing which games are trending.
+
+This setup also makes it easy to expand later by:
+- Adding more games to the list
+- Replacing it with a database
+- Connecting to an external API once stable
