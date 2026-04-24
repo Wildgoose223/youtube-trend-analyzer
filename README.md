@@ -54,7 +54,8 @@ Each run inserts a new snapshot of data:
 | Genshin Impact | 1        | 2026-04-24 12:32     |
 | GTA            | 1        | 2026-04-24 12:32     |
 
-![Database Output](images/database_output.png)
+<img width="549" height="1021" alt="image" src="https://github.com/user-attachments/assets/6036f82a-f62c-4bad-aed5-39039f48e950" />
+
 
 ---
 
