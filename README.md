@@ -146,3 +146,6 @@ This project demonstrates a complete data pipeline:
 - Database storage  
 - Automation  
 - Trend tracking over time
+
+
+
