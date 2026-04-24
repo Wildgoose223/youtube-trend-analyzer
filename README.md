@@ -1,79 +1,148 @@
 # YouTube Trend Analyzer
-Python-based data pipeline using the YouTube Data API to extract, clean, and analyze trending gaming video data.
+
+A Python-based data pipeline that extracts trending gaming videos from YouTube, processes the data, identifies popular games, and stores the results in a PostgreSQL database for tracking trends over time.
+
+---
+
+## Overview
+
+This project pulls trending gaming videos using the YouTube Data API, cleans and analyzes titles, matches them against a custom game library, and stores structured results in a PostgreSQL database. Each run captures a snapshot of trending data.
+
+---
 
 ## Features
-- Pulls trending gaming videos from YouTube (Category 20)
+
+- Pulls trending gaming videos (YouTube Category 20)
 - Cleans titles using regex
-- Extracts keywords from video titles
-- Counts most frequent terms using Python collections
-- Prepares data for database storage
+- Matches game titles using a custom game library with aliases
+- Counts mentions of each game
+- Stores results in PostgreSQL
+- Tracks data over time using timestamps
+- Designed to run automatically twice daily
+
+---
+
+## Data Pipeline
+
+1. Extract – Fetch trending gaming videos from YouTube API  
+2. Transform – Clean titles and match game names  
+3. Load – Store results in PostgreSQL database  
+
+---
+
+## Example Output
+
+```
+Roblox: 3
+Minecraft: 2
+Genshin Impact: 1
+GTA: 1
+```
+
+---
+
+## Database Output
+
+The processed data is stored in a PostgreSQL table called `trending_games`.
+
+Each run inserts a new snapshot of data:
+
+| game_name       | mentions | collected_at          |
+|----------------|----------|----------------------|
+| Roblox         | 3        | 2026-04-24 12:32     |
+| Minecraft      | 2        | 2026-04-24 12:32     |
+| Genshin Impact | 1        | 2026-04-24 12:32     |
+| GTA            | 1        | 2026-04-24 12:32     |
+
+![Database Output](images/database_output.png)
+
+---
 
 ## Tech Stack
+
 - Python
 - YouTube Data API
+- PostgreSQL
+- psycopg2
 - pandas
-- requests
 - regex
+
+---
 
 ## How to Run
 
 1. Install dependencies:
-```
+```bash
 pip install -r requirements.txt
 ```
 
-2. Add your YouTube API key in the script
-
-3. Run:
+2. Create a `.env` file in your project folder:
+```env
+YOUTUBE_API_KEY=your_api_key_here
 ```
+
+3. Run the script:
+```bash
 python youtube_trends_to_db.py
 ```
 
+---
 
-##  Future Improvements
-- Integrate game title matching (Steam/Wikipedia)
-- Store results in PostgreSQL
-- Build dashboard for trend visualization
+## Automation
 
-## Interpreting Results
+This project can be automated using Windows Task Scheduler:
 
-The output represents how often specific games appear in trending YouTube gaming videos.
+- Runs twice daily (morning and evening)
+- Executes the Python script automatically
+- Continuously collects trend data
 
-For example:
+---
 
-Fortnite: 5
-Minecraft: 3
-Call of Duty: 2
+## Game Matching System
 
-This indicates that Fortnite is currently receiving more attention in trending content compared to the other listed games.
+The project uses a custom `game_library.py` file containing known game titles and aliases.
 
-Higher mention counts suggest:
-- Increased popularity
-- Higher content creation activity
-- Strong viewer interest
+Examples:
+- "Call of Duty" matches "cod", "warzone"
+- "Counter Strike" matches "cs2", "csgo"
+- "League of Legends" matches "lol"
 
-Lower counts may indicate:
-- Niche or declining interest
-- Less trending content at that moment
+Process:
+- Titles are cleaned and normalized
+- Keywords are matched against known aliases
+- Mentions are counted and stored
 
-This data can be used to identify emerging trends, track game popularity over time, and support content or business decisions.
+This converts unstructured YouTube titles into structured trend data.
 
+---
 
-## Game Library
+## Data Design
 
-I created a separate file called `game_library.py` that stores a list of known game titles. This acts as a reference dataset for the script.
+The database stores historical data, not just the latest results.
 
-Instead of relying on external APIs (like Steam, which was inconsistent), I used my own controlled list of games so the matching would be more reliable.
+Each run inserts new rows with a timestamp (`collected_at`), allowing:
+- Trend tracking over time
+- Historical comparisons
+- Aggregation and analysis
 
-In the script:
-- The game library is imported and cleaned (lowercased, punctuation removed)
-- YouTube video titles are cleaned the same way
-- The script checks if a game name appears inside each title
-- If it does, it counts that as a match
+---
 
-This is how the script turns messy YouTube titles into structured data showing which games are trending.
+## Future Improvements
 
-This setup also makes it easy to expand later by:
-- Adding more games to the list
-- Replacing it with a database
-- Connecting to an external API once stable
+- Expand game detection dynamically (API or database)
+- Improve matching using NLP techniques
+- Store raw video titles separately
+- Build dashboard for visualization
+- Deploy to cloud (Azure / VM)
+
+---
+
+## Key Takeaway
+
+This project demonstrates a complete data pipeline:
+
+- API integration  
+- Data cleaning and transformation  
+- Database storage  
+- Automation  
+- Trend tracking over time
