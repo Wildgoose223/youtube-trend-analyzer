@@ -4,12 +4,18 @@ from collections import Counter
 
 import psycopg2
 from googleapiclient.discovery import build
+from dotenv import load_dotenv
 
 from game_library import GAME_LIBRARY
+
+# Load environment variables from .env file
+load_dotenv()
 
 # =========================
 # CONFIG
 # =========================
+
+# Pull API key and DB credentials from environment variables
 API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 DB_CONFIG = {
@@ -19,16 +25,20 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD")
 }
 
+# Initialize YouTube API client
 YOUTUBE = build("youtube", "v3", developerKey=API_KEY)
 
 
 # =========================
 # HELPERS
 # =========================
+
 def clean_text(text):
     """
-    Lowercases text and removes most punctuation
-    so matching is easier.
+    Normalize text for easier matching:
+    - lowercase everything
+    - remove punctuation
+    - remove extra spaces
     """
     text = text.lower()
     text = re.sub(r"[^a-zA-Z0-9\s]", " ", text)
@@ -38,8 +48,9 @@ def clean_text(text):
 
 def fetch_gaming_titles():
     """
-    Pull the top US gaming videos from YouTube.
-    Gaming category = 20
+    Fetch top trending gaming videos from YouTube (US region).
+    Category 20 = Gaming
+    Returns a list of video titles.
     """
     request = YOUTUBE.videos().list(
         part="snippet",
@@ -61,10 +72,18 @@ def fetch_gaming_titles():
 
 def match_games(video_titles, game_library):
     """
-    Match game names from your custom library
-    against YouTube video titles.
+    Match known game names against video titles.
+
+    Strategy:
+    - Clean both titles and game names
+    - Check if game name appears in title
+    - Count occurrences
+
+    Returns a Counter of matched games.
     """
     matches = Counter()
+
+    # Pre-clean game library for faster comparisons
     cleaned_library = [(game, clean_text(game)) for game in game_library]
 
     for title in video_titles:
@@ -80,6 +99,8 @@ def match_games(video_titles, game_library):
 def save_to_db(game_matches):
     """
     Save matched game counts into PostgreSQL.
+
+    Each game + count is inserted as a row.
     """
     conn = None
     cursor = None
@@ -111,6 +132,13 @@ def save_to_db(game_matches):
 
 
 def main():
+    """
+    Main pipeline flow:
+    1. Fetch YouTube titles
+    2. Match games from custom library
+    3. Print results
+    4. Store results in database
+    """
     try:
         video_titles = fetch_gaming_titles()
 
