@@ -1,26 +1,133 @@
-<h1>YouTube Gaming Trend Analyzer</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Gaming Trend Analyzer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .hero {
+      background: #111827;
+      padding: 40px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #93c5fd;
+      margin-top: 35px;
+    }
+    .card {
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 14px;
+      margin: 18px 0;
+      border: 1px solid #334155;
+    }
+    ul {
+      padding-left: 22px;
+    }
+    pre {
+      background: #020617;
+      padding: 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      color: #a7f3d0;
+    }
+    .tag {
+      display: inline-block;
+      background: #2563eb;
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin: 4px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
 
-<p>
-A Python-based data pipeline that pulls trending gaming videos from YouTube,
-matches games using PostgreSQL aliases, and tracks trends over time.
-</p>
+    <div class="hero">
+      <h1>YouTube Gaming Trend Analyzer</h1>
+      <p>
+        A Python-based data pipeline that pulls trending gaming videos from YouTube,
+        matches games using PostgreSQL aliases, tracks unknown terms, and stores
+        trend results over time.
+      </p>
+      <span class="tag">Python</span>
+      <span class="tag">PostgreSQL</span>
+      <span class="tag">YouTube API</span>
+      <span class="tag">Data Pipeline</span>
+    </div>
 
-<h2>Features</h2>
-<ul>
-  <li>YouTube Data API integration</li>
-  <li>PostgreSQL database storage</li>
-  <li>Game alias matching</li>
-  <li>Unknown term tracking</li>
-  <li>Automated trend collection</li>
-</ul>
+    <div class="card">
+      <h2>Project Overview</h2>
+      <p>
+        This project turns unstructured YouTube gaming video titles into structured
+        trend data. It uses a database-driven game alias system to identify games,
+        count mentions, and store results for historical tracking.
+      </p>
+    </div>
 
-<h2>Pipeline</h2>
-<pre>
+    <div class="card">
+      <h2>Features</h2>
+      <ul>
+        <li>YouTube Data API integration</li>
+        <li>PostgreSQL database storage</li>
+        <li>Database-driven game alias matching</li>
+        <li>Unknown term tracking for game discovery</li>
+        <li>Automated trend collection</li>
+        <li>Historical trend tracking with timestamps</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Pipeline</h2>
+      <pre>
 YouTube API
-↓
+   ↓
 Python Script
-↓
-PostgreSQL
-↓
-Trend Results
-</pre>
+   ↓
+PostgreSQL Database
+   ├── games
+   ├── game_aliases
+   ├── trending_games
+   └── unknown_terms
+      </pre>
+    </div>
+
+    <div class="card">
+      <h2>Example Output</h2>
+      <pre>
+Roblox: 4
+Minecraft: 2
+Call of Duty: 2
+Among Us: 1
+      </pre>
+    </div>
+
+    <div class="card">
+      <h2>Future Improvements</h2>
+      <ul>
+        <li>Azure cloud backup and failover</li>
+        <li>AI-powered query system</li>
+        <li>Dashboard for visualization</li>
+        <li>Automated game discovery</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
