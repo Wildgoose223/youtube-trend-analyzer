@@ -60,8 +60,26 @@
       margin-top: 15px;
       border: 1px solid #334155;
     }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .stat {
+      background: #020617;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+    .stat strong {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 5px;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
 
@@ -99,8 +117,17 @@
     </div>
 
     <div class="card">
+      <h2>Top Trending Now</h2>
+      <div class="grid">
+        <div class="stat"><strong>Roblox</strong>10 mentions</div>
+        <div class="stat"><strong>Minecraft</strong>5 mentions</div>
+        <div class="stat"><strong>Call of Duty</strong>4 mentions</div>
+        <div class="stat"><strong>Among Us</strong>2 mentions</div>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Pipeline</h2>
-      <p>System data flow:</p>
       <pre>
 YouTube API
    ↓
@@ -115,20 +142,9 @@ PostgreSQL Database
     </div>
 
     <div class="card">
-      <h2>Top Trending Now</h2>
-      <p>Example of aggregated trending games:</p>
-      <pre>
-Roblox – 10 mentions
-Minecraft – 5 mentions
-Call of Duty – 4 mentions
-Among Us – 2 mentions
-      </pre>
-    </div>
-
-    <div class="card">
       <h2>Database Output</h2>
       <p>Example of stored trend data from PostgreSQL:</p>
-      <img src="Images/database_output.jpg" alt="PostgreSQL database output screenshot">
+      <img src="https://raw.githubusercontent.com/Wildgoose223/youtube-trend-analyzer/main/database_output.jpg">
     </div>
 
     <div class="card">
